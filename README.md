@@ -20,9 +20,9 @@ What if you want to change content like add a header? No need for a separate
 filter, just chage the content.
 
     tap(function(file) {
-        file.content = Buffer.concat([
+        file.contents = Buffer.concat([
             new Buffer('HEADER'),
-            file.content
+            file.contents
         ]);
     });
 
