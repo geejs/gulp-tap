@@ -1,6 +1,6 @@
 {
   "name": "gulp-tap",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Easiest way to tap into a pipeline",
   "main": "index.js",
   "scripts": {
