@@ -48,10 +48,11 @@ module.exports = (lambda) ->
       stream
 
   modifyFile = (file) ->
-    obj = lambda(file, utils(this, file))
+    inst = file: file
+    obj = lambda(inst.file, utils(this, inst.file), inst)
 
     # passthrough if user returned a stream
-    this.emit('data', file) unless obj instanceof baseStream
+    this.emit('data', inst.file) unless obj instanceof baseStream
 
   return ES.through(modifyFile)
 
