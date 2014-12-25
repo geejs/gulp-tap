@@ -22,9 +22,7 @@
   },
   "homepage": "https://github.com/geejs/gulp-tap",
   "dependencies": {
-    "event-stream": "~3.1.0"
-  },
-  "devDependencies": {
+    "event-stream": "~3.1.0",
     "through2": "~0.6.3"
   }
 }
