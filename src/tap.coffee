@@ -1,5 +1,6 @@
 ES = require('event-stream')
 baseStream = require('stream')
+through = require('through2')
 
 DEBUG = process.env.NODE_ENV is 'development'
 
@@ -47,16 +48,20 @@ module.exports = (lambda) ->
       stream.write file
       stream
 
-  modifyFile = (file) ->
+  modifyFile = (file, enc, cb) ->
     inst = file: file
     obj = lambda(inst.file, utils(this, inst.file), inst)
 
     # if user returned a stream
     # passthrough when the stream is ended
-    if obj instanceof baseStream
-      obj.on('end', => this.emit('data', inst.file))
+    if obj instanceof baseStream && !obj._readableState.ended
+      obj.on('end', =>
+        this.push(file)
+        cb()
+      )
     else
-      this.emit('data', inst.file)
+      this.push(file)
+      cb()
 
-  return ES.through(modifyFile, ->)
+  return through.obj(modifyFile, (cb) -> cb())
 
