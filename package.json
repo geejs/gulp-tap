@@ -1,6 +1,6 @@
 {
   "name": "gulp-tap",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Easiest way to tap into a pipeline",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,10 @@
     "gulp",
     "gee"
   ],
-  "author": "Mario Gutierrez <mario@mgutz.com>",
+  "authors": [
+    "Mario Gutierrez <mario@mgutz.com>",
+    "Jon Ege Ronnenberg <jon.ronnenberg@gmail.com>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/geejs/gulp-tap/issues"
