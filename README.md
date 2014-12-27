@@ -19,6 +19,36 @@ gulp.src("src/**/*.{coffee,js}")
     .pipe(gulp.dest('build'));
 ```
 
+Save files to different locations based on file extension.
+```js
+var destinations = {
+  "scss": "sass",
+  "js": "scripts",
+  "img": "assets/images"
+};
+
+var files = ["loongpath/s.scss", "another/js.js", "verylongpath/img.png"];
+
+gulp.src(files).pipe(tap(where));
+
+function where(file, t) {
+  var destPath, match;
+  match = function(p) {
+    var ext;
+    ext = path.extname(p)
+      .substr(1); // remove leading "."
+    if ((ext === "jpg" || ext === "png" || ext === "svg" || ext === "gif")) {
+      ext = "img";
+    }
+    return destinations[ext] || false;
+  };
+  destPath = match(file.path);
+  if (destPath) {
+    return t.through(gulp.dest, [destPath]);
+  }
+};
+```
+
 What if you want to change content like add a header? No need for a separate
 filter, just change the content.
 
