@@ -45,12 +45,12 @@ exports.tapTest =
 
       gulp.src files.map (p) -> (fixturePath + "/" + p)
         .pipe tap where
-        .on "end", -> setTimeout -> # give gulp.dest a chance to write the files
+        .on "end", -> setTimeout ->
           test.ok fs.existsSync getPath "assets/images/img.png"
           test.ok fs.existsSync getPath "scripts/js.js"
           test.ok fs.existsSync getPath "sass/s.scss"
           test.done()
-        , 500
+        , 500 # give gulp.dest a (500ms) chance to write the files
         .on "error", (err) ->
           console.trace(err)
           test.done()
