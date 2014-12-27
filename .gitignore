@@ -1,1 +1,6 @@
 node_modules
+
+# do not track test files
+sass/
+assets/
+scripts/

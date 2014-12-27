@@ -4,7 +4,7 @@
   "description": "Easiest way to tap into a pipeline",
   "main": "index.js",
   "scripts": {
-    "test": "nodeunit tests"
+    "test": "./node_modules/.bin/nodeunit tests"
   },
   "repository": {
     "type": "git",
