@@ -10,8 +10,6 @@ DEBUG = process.env.NODE_ENV is 'development'
 # another stream or change content.
 ###
 module.exports = (lambda) ->
-  id = 1
-  cache = {}
   utils = (tapStream, file) ->
 
     ###
@@ -26,24 +24,15 @@ module.exports = (lambda) ->
     #   t.through coffee, [{bare: true}]
     ###
     through: (filter, args) ->
-      if filter.__tapId
-        stream = cache[filter.__tapId]
-        cache[filter.__tapId] = null unless stream
+      if DEBUG
+        if !Array.isArray(args)
+          throw new Error("Args must be an array to `apply` to the filter")
+      stream = filter.apply(null, args)
+      stream.on "error", (err) ->
+        tapStream.emit "error", err
 
-      if stream
-        #stream.removeAllEvents "error"
-      else
-        if DEBUG
-          if !Array.isArray(args)
-            throw new Error("Args must be an array to `apply` to the filter")
-        stream = filter.apply(null, args)
-        stream.on "error", (err) ->
-          tapStream.emit "error", err
-
-        filter.__tapId = ""+id
-        cache[filter.__tapId] = stream
-        id += 1
-        stream.pipe tapStream
+      # Use original stream pipe file when emit `end/data` event
+      # stream.pipe tapStream
 
       stream.write file
       stream
@@ -52,16 +41,20 @@ module.exports = (lambda) ->
     inst = file: file
     obj = lambda(inst.file, utils(this, inst.file), inst)
 
+    next = () =>
+      this.push(file)
+      cb()
+
     # if user returned a stream
     # passthrough when the stream is ended
     if obj instanceof baseStream && !obj._readableState.ended
-      obj.on('end', =>
-        this.push(file)
-        cb()
+      obj.on('end', next)
+      obj.on('data', ->
+        obj.removeListener('end', next)
+        next()
       )
     else
-      this.push(file)
-      cb()
+      next()
 
   return through.obj(modifyFile, (cb) -> cb())
 
