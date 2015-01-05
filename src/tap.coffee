@@ -1,6 +1,8 @@
-ES = require('event-stream')
 baseStream = require('stream')
 through = require('through2')
+
+DEBUG = process.env.NODE_ENV is 'development'
+
 
 ###
 # Taps into the pipeline and allows user to easily route data through
@@ -32,7 +34,6 @@ module.exports = (lambda) ->
       # stream.pipe tapStream
 
       stream.write file
-      stream.pipe tapStream
       stream
 
   modifyFile = (file, enc, cb) ->
@@ -56,4 +57,3 @@ module.exports = (lambda) ->
       next()
 
   return through.obj(modifyFile, (cb) -> cb())
-
