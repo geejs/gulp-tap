@@ -1,6 +1,6 @@
 {
   "name": "gulp-tap",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Easiest way to tap into a pipeline",
   "main": "index.js",
   "scripts": {
@@ -8,16 +8,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/geejs/gulp-tap"
+    "url": "https://github.com/dotnetCarpenter/gulp-tap"
   },
   "keywords": [
-    "gulpplugin",
+    "tap",
     "gulp",
-    "gee"
+    "stream"
   ],
   "authors": [
     "Mario Gutierrez <mario@mgutz.com>",
-    "Jon Ege Ronnenberg <jon.ronnenberg@gmail.com>"
+    "Jon Ege Ronnenberg <jon.ronnenberg@gmail.com>",
+    "Javey <jiawei23716@sina.com>"
   ],
   "license": "MIT",
   "bugs": {
@@ -28,7 +29,8 @@
     "through2": "~0.6.3"
   },
   "devDependencies": {
-    "nodeunit": "~0.9.0",
-    "gulp": "~3.8.10"
+    "coffee-script": "^1.8.0",
+    "gulp": "~3.8.10",
+    "nodeunit": "~0.9.0"
   }
 }
