@@ -1,5 +1,6 @@
 ES = require('event-stream')
 baseStream = require('stream')
+through = require('through2')
 
 ###
 # Taps into the pipeline and allows user to easily route data through
@@ -20,19 +21,39 @@ module.exports = (lambda) ->
     #   t.through coffee, [{bare: true}]
     ###
     through: (filter, args) ->
+      if DEBUG
+        if !Array.isArray(args)
+          throw new Error("Args must be an array to `apply` to the filter")
       stream = filter.apply(null, args)
       stream.on "error", (err) ->
         tapStream.emit "error", err
+
+      # Use original stream pipe file when emit `end/data` event
+      # stream.pipe tapStream
 
       stream.write file
       stream.pipe tapStream
       stream
 
-  modifyFile = (file) ->
+  modifyFile = (file, enc, cb) ->
     inst = file: file
     obj = lambda(inst.file, utils(this, inst.file), inst)
 
-    # passthrough if user returned a stream
-    this.emit('data', inst.file) unless obj instanceof baseStream
+    next = () =>
+      this.push(file)
+      cb()
 
-  return ES.through(modifyFile)
+    # if user returned a stream
+    # passthrough when the stream is ended
+    if obj instanceof baseStream && !obj._readableState.ended
+      obj.on('end', next)
+      obj.on('data', ->
+        obj.removeListener('end', next)
+        obj.removeListener('data', arguments.callee)
+        next()
+      )
+    else
+      next()
+
+  return through.obj(modifyFile, (cb) -> cb())
+
