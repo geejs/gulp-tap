@@ -51,6 +51,7 @@ module.exports = (lambda) ->
       obj.on('end', next)
       obj.on('data', ->
         obj.removeListener('end', next)
+        obj.removeListener('data', arguments.callee)
         next()
       )
     else
