@@ -49,11 +49,6 @@ module.exports = (lambda) ->
     # passthrough when the stream is ended
     if obj instanceof baseStream && !obj._readableState.ended
       obj.on('end', next)
-      obj.on('data', ->
-        obj.removeListener('end', next)
-        obj.removeListener('data', arguments.callee)
-        next()
-      )
     else
       next()
 

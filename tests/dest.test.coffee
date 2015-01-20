@@ -71,3 +71,6 @@ exports.tapTest =
 
       if destPath
         t.through gulp.dest, [destPath]
+
+      # don't return stream
+      null
