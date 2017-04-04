@@ -33,6 +33,9 @@ tap(function(file) {
 
 If you do not return a stream, tap forwards your changes.
 
+## Examples
+
+See [Wiki](https://github.com/geejs/gulp-tap/wiki) for more examples.
 
 ## License
 
