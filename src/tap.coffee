@@ -1,4 +1,4 @@
-ES = require('event-stream')
+through = require('through')
 baseStream = require('stream')
 
 DEBUG = process.env.NODE_ENV is 'development'
@@ -54,5 +54,5 @@ module.exports = (lambda) ->
     # passthrough if user returned a stream
     this.emit('data', inst.file) unless obj instanceof baseStream
 
-  return ES.through(modifyFile)
+  return through(modifyFile)
 
