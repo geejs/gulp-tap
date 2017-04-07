@@ -4,3 +4,8 @@ node_modules
 sass/
 assets/
 scripts/
+coverage
+.nyc_output
+
+# do not track vscode (IDE) files
+.vscode

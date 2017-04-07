@@ -1,4 +1,4 @@
-# gulp-tap [![Build Status](https://travis-ci.org/geejs/gulp-tap.svg?branch=master)](https://travis-ci.org/geejs/gulp-tap)
+# gulp-tap [![Build Status](https://travis-ci.org/geejs/gulp-tap.svg?branch=master)](https://travis-ci.org/geejs/gulp-tap) [![Coverage Status](https://coveralls.io/repos/github/geejs/gulp-tap/badge.svg?branch=master)](https://coveralls.io/github/geejs/gulp-tap?branch=master)
 
 Easily tap into a pipeline.
 

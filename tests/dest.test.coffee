@@ -1,7 +1,8 @@
 fs    = require 'fs'
 path  = require 'path'
 gulp  = require 'gulp'
-tap   = require '../src/tap'
+tap   = require '../'
+tapTest = require 'tap'
 
 deleteDirectory = (p) ->
   if fs.existsSync p
@@ -23,13 +24,9 @@ clean = (callback) ->
 getPath = (rel) -> path.resolve __dirname, '..', rel
 
 
-exports.changeDest =
+tapTest.test "gulp-tap can change dest in the middle of stream", (test) ->
 
-  setUp: clean
-  tearDown: clean
-
-  "gulp-tap can change dest in the middle of stream": (test) ->
-    test.expect 3
+    test.plan 3
 
     destinations =
       'scss': 'sass'
@@ -37,25 +34,6 @@ exports.changeDest =
       'img':  'assets/images'
 
     fixturePath = getPath 'tests/fixtures/'
-
-    fs.readdir fixturePath, (err, files) ->
-      if err
-        console.trace('Can not read fixtures from ' + fixturePath)
-        test.done()
-
-      gulp.src files.map (p) -> (fixturePath + '/' + p)
-        .pipe tap where
-        .on 'end', ->
-          setTimeout (->
-            test.ok fs.existsSync getPath 'assets/images/img.png'
-            test.ok fs.existsSync getPath 'scripts/js.js'
-            test.ok fs.existsSync getPath 'sass/s.scss'
-            test.done()
-          ), 500 # give gulp.dest a (500ms) chance to write the files
-        .on 'error', (err) ->
-          console.trace(err)
-          test.done()
-        .pipe tap(->) # We must provide a pipe to make stream end
 
     where = (file, t) ->
       match = (p) ->
@@ -73,21 +51,39 @@ exports.changeDest =
         t.through gulp.dest, [destPath]
 
 
+    fs.readdir fixturePath, (err, files) ->
+      if err
+        console.trace('Can not read fixtures from ' + fixturePath)
+        test.done()
+
+      gulp.src files.map (p) -> (fixturePath + '/' + p)
+        .pipe tap where
+        .on 'end', ->
+          setTimeout (->
+            test.ok fs.existsSync getPath 'assets/images/img.png'
+            test.ok fs.existsSync getPath 'scripts/js.js'
+            test.ok fs.existsSync getPath 'sass/s.scss'
+            test.done()
+          ), 500 # give gulp.dest a (500ms) chance to write the files
+        .on 'error', (err) ->
+          console.trace(err)
+          test.end()
+        .pipe tap(->) # We must provide a pipe to make stream end
+
+
 ###exports.sameIOFileName =
 
   'test for infinite loop, issue #3': (test) ->
-    test.expect 1
+    test.plan 1
 
     fixturePath = getPath 'tests/fixtures/'
     gulp.src fixturePath + '/*'
     test.ok true
     test.done()###
 
-exports.changeFileBase =
+tapTest.test "change file.base twice will end with 'Error: no writecb in Transform classh' #5", (test) ->
 
-  "change file.base twice will end with 'Error: no writecb in Transform classh' #5": (test) ->
-
-    test.expect 1
+    test.plan 1
 
     fixturePath = getPath 'tests/fixtures/'
 
