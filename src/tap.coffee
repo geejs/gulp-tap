@@ -1,7 +1,6 @@
 baseStream = require('stream')
 through = require('through2')
 
-debugger
 DEBUG = process.env.NODE_ENV is 'development'
 
 
