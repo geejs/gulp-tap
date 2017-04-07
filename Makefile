@@ -1,4 +1,4 @@
 .PHONY: compile
 
 compile:
-	@coffee -cbm -o lib src
+	@npm run coffee -- -cbm -o lib src

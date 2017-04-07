@@ -4,7 +4,8 @@
   "description": "Easiest way to tap into a pipeline",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/nodeunit tests"
+    "test": "./node_modules/.bin/nodeunit tests",
+    "coffee": "coffee"
   },
   "repository": {
     "type": "git",
