@@ -4,8 +4,8 @@
   "description": "Easiest way to tap into a pipeline",
   "main": "index.js",
   "scripts": {
-    "pretest": "coffee -cm tests ",
-    "test": "tap tests/*.js",
+    "pretest": "coffee --compile --map tests",
+    "test": "tap -J tests/*.js",
     "posttest": "rm tests/*.js tests/*.js.map",
     "test:coverage": "npm test -- --cov",
     "coffee": "coffee"

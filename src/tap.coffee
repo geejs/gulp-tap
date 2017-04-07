@@ -1,6 +1,7 @@
 baseStream = require('stream')
 through = require('through2')
 
+debugger
 DEBUG = process.env.NODE_ENV is 'development'
 
 
@@ -13,8 +14,7 @@ module.exports = (lambda) ->
 
     ###
     # Routes through another stream. The filter must not be
-    # created. This will create the filter as needed and
-    # cache when it can.
+    # created. This will create the filter as needed.
     #
     # @param filter {stream}
     # @param args {Array} Array containg arguments to apply to filter.
@@ -23,6 +23,7 @@ module.exports = (lambda) ->
     #   t.through coffee, [{bare: true}]
     ###
     through: (filter, args) ->
+      
       if DEBUG
         if !Array.isArray(args)
           throw new Error("Args must be an array to `apply` to the filter")

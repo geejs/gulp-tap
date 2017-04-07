@@ -14,17 +14,18 @@ deleteDirectory = (p) ->
         fs.unlinkSync curP
     fs.rmdirSync p
 
-clean = (callback) ->
+clean = ->
     deleteDirectory 'assets'
     deleteDirectory 'scripts'
     deleteDirectory 'sass'
-    callback()
 
 # helper function to get a path relative to the root
 getPath = (rel) -> path.resolve __dirname, '..', rel
 
 
 tapTest.test "gulp-tap can change dest in the middle of stream", (test) ->
+
+    test.tearDown(clean)
 
     test.plan 3
 
@@ -54,7 +55,7 @@ tapTest.test "gulp-tap can change dest in the middle of stream", (test) ->
     fs.readdir fixturePath, (err, files) ->
       if err
         console.trace('Can not read fixtures from ' + fixturePath)
-        test.done()
+        test.end()
 
       gulp.src files.map (p) -> (fixturePath + '/' + p)
         .pipe tap where
@@ -63,7 +64,7 @@ tapTest.test "gulp-tap can change dest in the middle of stream", (test) ->
             test.ok fs.existsSync getPath 'assets/images/img.png'
             test.ok fs.existsSync getPath 'scripts/js.js'
             test.ok fs.existsSync getPath 'sass/s.scss'
-            test.done()
+            test.end()
           ), 500 # give gulp.dest a (500ms) chance to write the files
         .on 'error', (err) ->
           console.trace(err)
@@ -71,7 +72,8 @@ tapTest.test "gulp-tap can change dest in the middle of stream", (test) ->
         .pipe tap(->) # We must provide a pipe to make stream end
 
 
-###exports.sameIOFileName =
+### stub for https://github.com/geejs/gulp-tap/issues/3
+exports.sameIOFileName =
 
   'test for infinite loop, issue #3': (test) ->
     test.plan 1
@@ -79,20 +81,4 @@ tapTest.test "gulp-tap can change dest in the middle of stream", (test) ->
     fixturePath = getPath 'tests/fixtures/'
     gulp.src fixturePath + '/*'
     test.ok true
-    test.done()###
-
-tapTest.test "change file.base twice will end with 'Error: no writecb in Transform classh' #5", (test) ->
-
-    test.plan 1
-
-    fixturePath = getPath 'tests/fixtures/'
-
-    gulp.src fixturePath + '/js.js'
-      .pipe tap (file) ->
-        file.old_base = file.base
-        file.base += 'random-path/'
-      .pipe tap (file) ->
-        file.base = file.old_base
-      .pipe tap (file) ->
-        test.ok true
-        test.done()
+    test.end()###
