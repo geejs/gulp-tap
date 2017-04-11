@@ -1,6 +1,6 @@
 {
   "name": "gulp-tap",
-  "version": "0.4.0",
+  "version": "0.4.2",
   "description": "Easiest way to tap into a pipeline",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dotnetCarpenter/gulp-tap"
+    "url": "https://github.com/geejs/gulp-tap"
   },
   "keywords": [
     "tap",
