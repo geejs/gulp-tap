@@ -1,3 +1,5 @@
+'use strict'
+
 baseStream = require('stream')
 through = require('through2')
 
@@ -22,10 +24,11 @@ module.exports = (lambda) ->
     #   t.through coffee, [{bare: true}]
     ###
     through: (filter, args) ->
-      
+
       if DEBUG
-        if !Array.isArray(args)
-          throw new Error("Args must be an array to `apply` to the filter")
+        if not Array.isArray(args)
+          throw new TypeError("Args must be an array to `apply` to the filter")
+
       stream = filter.apply(null, args)
       stream.on "error", (err) ->
         tapStream.emit "error", err
@@ -46,13 +49,13 @@ module.exports = (lambda) ->
 
     # if user returned a stream
     # passthrough when the stream is ended
-    if obj instanceof baseStream && !obj._readableState.ended
+    if obj instanceof baseStream and not obj._readableState.ended
+
       obj.on('end', next)
-      obj.on('data', ->
-        obj.removeListener('end', next)
-        obj.removeListener('data', arguments.callee)
-        next()
-      )
+      obj.on('data', data = ->
+        obj.removeListener 'end', next
+        obj.removeListener 'data', data
+        next())
     else
       next()
 

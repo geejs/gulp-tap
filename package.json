@@ -1,14 +1,15 @@
 {
   "name": "gulp-tap",
-  "version": "0.4.2",
+  "version": "1.0.0",
   "description": "Easiest way to tap into a pipeline",
   "main": "index.js",
   "scripts": {
     "pretest": "coffee --compile --map tests",
     "test": "tap -J tests/*.js",
     "posttest": "rm tests/*.js tests/*.js.map",
-    "test:coverage": "npm test -- --cov",
-    "coffee": "coffee"
+    "test:cov": "npm test -- --cov",
+    "coffee": "coffee",
+    "dev": "coffee --watch --compile tests & coffee --watch --compile src"
   },
   "repository": {
     "type": "git",
