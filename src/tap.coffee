@@ -10,7 +10,7 @@ DEBUG = process.env.NODE_ENV is 'development'
 # Taps into the pipeline and allows user to easily route data through
 # another stream or change content.
 ###
-module.exports = (lambda) ->
+module.exports = (lambda, lambdaArgs) ->
   utils = (tapStream, file) ->
 
     ###
@@ -41,7 +41,7 @@ module.exports = (lambda) ->
 
   modifyFile = (file, enc, cb) ->
     inst = file: file
-    obj = lambda(inst.file, utils(this, inst.file), inst)
+    obj = lambda(inst.file, utils(this, inst.file), inst, lambdaArgs)
 
     next = () =>
       this.push(file)
