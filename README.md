@@ -2,6 +2,10 @@
 
 Easily tap into a pipeline.
 
+## Install
+
+`npm install gulp-tap --save-dev`
+
 ## Uses
 
 Some filters like `gulp-coffee` process all files. What if you want to process
