@@ -7,7 +7,7 @@
     "pretest": "coffee --compile --map tests",
     "test": "tap -J tests/*.js",
     "posttest": "rm tests/*.js tests/*.js.map",
-    "test:cov": "npm test -- --cov",
+    "test:cov": "yarn test -- --cov",
     "coffee": "coffee",
     "dev": "coffee --watch --compile tests & coffee --watch --compile src"
   },
