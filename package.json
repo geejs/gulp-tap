@@ -1,6 +1,6 @@
 {
   "name": "gulp-tap",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Easiest way to tap into a pipeline",
   "main": "index.js",
   "scripts": {
@@ -22,6 +22,7 @@
   ],
   "authors": [
     "Mario Gutierrez <mario@mgutz.com>",
+    "Rubén Salvador García San Juan <rssanjuan2704@gmail.com>",
     "Jon Ege Ronnenberg <jon.ronnenberg@gmail.com>",
     "Javey <jiawei23716@sina.com>"
   ],
