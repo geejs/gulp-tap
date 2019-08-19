@@ -31,12 +31,12 @@
   },
   "homepage": "https://github.com/geejs/gulp-tap",
   "dependencies": {
-    "through2": "^2.0.3"
+    "through2": "^3.0.1"
   },
   "devDependencies": {
     "coffee-script": "^1.12.4",
-    "coveralls": "^2.13.0",
-    "gulp": "^3.9.1",
-    "tap": "^10.3.1"
+    "coveralls": "^3.0.5",
+    "gulp": "^4.0.2",
+    "tap": "^14.4.1"
   }
 }
